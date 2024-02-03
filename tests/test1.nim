@@ -4,6 +4,8 @@ import std/[
 
 import mutf8
 
+# Tests inspired by https://github.com/sciencesakura/mutf-8/blob/master/src/index.test.ts!
+
 suite "Modified UTF-8":
   block: # Decoding testsuite
     test "Empty string decoding":

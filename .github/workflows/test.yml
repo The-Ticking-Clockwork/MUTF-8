@@ -1,0 +1,28 @@
+name: Run Tests
+
+on:
+  [push, pull_request]
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        nim-version: ['1.6.0', stable]
+        nim-backend: [c, js]
+        os: [ubuntu-latest, windows-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: jiro4989/setup-nim-action@v1
+        with:
+          nim-version: ${{ matrix.nim-version }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Dependencies
+        run: nimble install -Y
+
+      - name: Run Tests
+        run: nimble test -b:${{ matrix.nim-backend }}
